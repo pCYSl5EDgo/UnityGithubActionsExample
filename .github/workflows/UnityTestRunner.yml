@@ -14,15 +14,16 @@ jobs:
     container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
     steps:
       - uses: actions/checkout@master
-      - run: mkdir -p /temp/artifact
+      - run: mkdir -p /artifact
       - run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
         env:
           CYPHER_KEY: ${{ secrets.cypherkey }}
       - name: Run Tests
         run: |
-          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -runEditorTests -projectPath . -editorTestResultFile ./results.xml -silent-crashes || exit 0
-          cp ./results.xml /temp/artifact
+          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -runEditorTests -projectPath . -editorTestResultFile /artifact/results.xml -silent-crashes || exit 0
+      - run: cat /artifact/results.xml
+      - run: ls /artifact
       - uses: actions/upload-artifact@master
         with:
           name: result
-          path: /temp/artifact
+          path: /artifact
