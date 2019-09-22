@@ -20,10 +20,9 @@ jobs:
           CYPHER_KEY: ${{ secrets.cypherkey }}
       - name: Run Tests
         run: |
-          xvfb-run --auto-servernum --server-args='-screen 0 640x480x24'\
-          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -testResults /artifact/results.xml -runTests -projectPath .
-          UNITY_EXIT_CODE=$?
-          exit 0
+          pwd
+          ls
+          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -runEditorTests -projectPath . -editorTestResultFile /artifact/results.xml -silent-crashes || exit 0
       - uses: actions/upload-artifact@master
         with:
           name: result
