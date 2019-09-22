@@ -21,7 +21,7 @@ jobs:
           openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
           mkdir -p /artifact
           /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -manualLicenseFile /Unity_v2018.x.ulf -runEditorTests . -editorTestsResultFile /artifact || exit 0
-      - uses: actions/upload-artifact
+      - uses: actions/upload-artifact@master
         with:
           name: result
           path: /artifact
