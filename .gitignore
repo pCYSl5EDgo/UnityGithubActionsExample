@@ -1,3 +1,6 @@
 Logs/
 Library/
 Temp/
+.vs/
+Build/
+obj/

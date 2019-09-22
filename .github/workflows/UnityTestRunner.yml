@@ -19,4 +19,9 @@ jobs:
           CYPHER_KEY: ${{ secrets.cypherkey }}
         run: |
           openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
-          /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -manualLicenseFile /Unity_v2018.x.ulf || exit 0
+          mkdir -p /artifact
+          /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -manualLicenseFile /Unity_v2018.x.ulf -runEditorTests . -editorTestsResultFile /artifact || exit 0
+      - uses: actions/upload-artifact
+        with:
+          name: result
+          path: /artifact
