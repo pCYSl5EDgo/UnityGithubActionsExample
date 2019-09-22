@@ -14,9 +14,7 @@ jobs:
     container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
     steps:
       - uses: actions/checkout@master
-      - run: |
-        mkdir -p /artifact
-        ls -l
+      - run: mkdir -p /artifact
       - name: Run Tests
         env:
           CYPHER_KEY: ${{ secrets.cypherkey }}
