@@ -15,13 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: mkdir -p /artifact
+      - run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
       - name: Run Tests
         env:
           CYPHER_KEY: ${{ secrets.cypherkey }}
         run: |
-          xvfb-run --auto-servernum --server-args='-screen 0 640x480x24'
-          openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
-          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -testResults /artifact/results.xml -runTests -projectPath . || exit 0
+          xvfb-run --auto-servernum --server-args='-screen 0 640x480x24'\
+          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -testResults /artifact/results.xml -runTests -projectPath .
+          UNITY_EXIT_CODE=$?
+          exit 0
       - uses: actions/upload-artifact@master
         with:
           name: result
