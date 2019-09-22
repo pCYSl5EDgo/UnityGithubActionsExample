@@ -21,7 +21,6 @@ jobs:
       - name: Run Tests
         run: |
           /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -runEditorTests -projectPath . -editorTestResultFile /artifact/results.xml -silent-crashes || exit 0
-      - run: cat /artifact/results.xml
       - run: ls /artifact
       - uses: actions/upload-artifact@master
         with:
