@@ -8,6 +8,6 @@ namespace Tests
 
         [Test] public void IsFalseTest() => Assert.IsFalse(false);
 
-        //[Test] public void FailProof() => Assert.IsTrue(false);
+        [Test] public void FailProof() => Assert.IsTrue(false);
     }
 }
