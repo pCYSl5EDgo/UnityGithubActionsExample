@@ -4,5 +4,6 @@ Temp/
 .vs/
 Build/
 obj/
+bin/
 Unity_v2018.x.ulf
 results.xml
