@@ -20,7 +20,7 @@ jobs:
           CYPHER_KEY: ${{ secrets.cypherkey }}
       - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
       - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile ./results.xml || exit 0
-      - run: cp ./results /path/to/artifact
+      - run: cp ./results.xml /path/to/artifact
       - run: ls /path/to/artifact
       - uses: actions/upload-artifact@v1
         with:
