@@ -20,7 +20,8 @@ jobs:
           CYPHER_KEY: ${{ secrets.cypherkey }}
       - name: Run Tests
         run: |
-          /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -logfile -runEditorTests -projectPath . -editorTestsResultFile /artifact/results.xml -silent-crashes || exit 0
+          ls -l
+          /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile /artifact/results.xml || exit 0
       - run: ls /artifact
       - uses: actions/upload-artifact@master
         with:
