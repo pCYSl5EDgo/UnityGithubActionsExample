@@ -26,3 +26,4 @@ jobs:
         with:
           name: test_results
           path: path/to/artifact
+      - run: exit $result
