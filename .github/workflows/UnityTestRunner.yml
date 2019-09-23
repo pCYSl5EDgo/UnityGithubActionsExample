@@ -21,7 +21,7 @@ jobs:
       - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
       - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || INPUT_RESULT=$?; echo $INPUT_RESULT > path/result
         env:
-          INPUT_RESULT=0
+          INPUT_RESULT: 0
       - uses: actions/upload-artifact@master
         with:
           name: test_results
