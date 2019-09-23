@@ -19,7 +19,7 @@ jobs:
         env:
           CYPHER_KEY: ${{ secrets.cypherkey }}
       - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
-      - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile /artifact/results.xml
+      - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile /artifact/results.xml || exit 0
       - run: ls /artifact
       - uses: actions/upload-artifact@master
         with:
