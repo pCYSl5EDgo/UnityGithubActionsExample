@@ -22,7 +22,7 @@ jobs:
       - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile ./results.xml || exit 0
       - run: cp ./results.xml /path/to/artifact
       - run: ls /path/to/artifact
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@master
         with:
-          name: result
+          name: ciphers
           path: /path/to/artifact
