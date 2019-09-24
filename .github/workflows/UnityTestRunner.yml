@@ -30,5 +30,7 @@ jobs:
           dotnet-version: '3.0.100'
       - run: |
           cd .nunitreporter
-          dotnet run ../path/to/artifact/results.xml --json > a.txt
-      - run: curl -X POST -H 'Content-type:application/json' --data '{"text":$(cat ./.nunitreporter/a.txt)}' https://hooks.slack.com/services/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
+          dotnet run ../path/to/artifact/results.xml --json > ../a.txt
+      - run: |
+          txt=$(cat a.txt)
+          curl -X POST -H 'Content-type:application/json' --data '{"text":$txt}' https://hooks.slack.com/services/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
