@@ -13,19 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     container: docker://gableroux/unity3d:${{ matrix.unity-tag }}
     steps:
+      - uses: actions/checkout@master
+      - run: mkdir -p path/to/artifact
+      - run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
+        env:
+          CYPHER_KEY: ${{ secrets.cypherkey }}
+      - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
+      - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || INPUT_RESULT=$?; echo $INPUT_RESULT > path/result
+      - uses: actions/upload-artifact@master
+        with:
+          name: test_results
+          path: path/to/artifact
       - uses: actions/setup-dotnet@master
         with:
           dotnet-version: '3.0.100'
-      - run: dotnet --version
-      #- uses: actions/checkout@master
-      #- run: mkdir -p path/to/artifact
-      #- run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
-        #env:
-          #CYPHER_KEY: ${{ secrets.cypherkey }}
-      #- run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
-      #- run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || INPUT_RESULT=$?; echo $INPUT_RESULT > path/result
-      #- uses: actions/upload-artifact@master
-        #with:
-          #name: test_results
-          #path: path/to/artifact
-      #- run: exit $(cat path/result)
+      - run: |
+        cd .nunitreporter
+        dotnet run ../path/to/artifact
