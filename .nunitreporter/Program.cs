@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.IO;
 using System.Xml;
 using Utf8Json;
@@ -19,6 +20,11 @@ namespace NUnitReporter
                         writer.Write(@"{""text"":");
                         writer.Write(Encoding.UTF8.GetString(JsonSerializer.Serialize(new JsonEncoder().Encode(doc, out _))));
                         writer.Write('}');
+                        return 0;
+                    }
+                case "--console":
+                    {
+                        Console.WriteLine(new ConsoleEncoder().Encode(doc, out _));
                         return 0;
                     }
                 default:
