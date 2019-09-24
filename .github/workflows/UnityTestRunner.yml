@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - run: curl -X POST -H \u0027Content-type&#58; application/json\u0027 --data \u0027{\u0022text\u0022&#58;\u0022Hello, World!\u0022}\u0027 https://hooks.slack.com/services/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
+      - run: curl -X POST -H \u0027Content-type&#58; application/json\u0027 --data \u0027{\u0022text\u0022&#58;\u0022Hello, World!\u0022}\u0027 https&#58;//hooks.slack.com/services/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
