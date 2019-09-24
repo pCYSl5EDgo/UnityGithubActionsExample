@@ -26,7 +26,7 @@ jobs:
           path: path/to/artifact
       - uses: actions/setup-dotnet@master
         with:
-          dotnet-version: '3.0.100'
+          dotnet-version: '3.0.100-rc1-014190'
       - run: |
           cd .nunitreporter
           dotnet run ../path/to/artifact/results.xml
