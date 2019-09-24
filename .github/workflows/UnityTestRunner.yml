@@ -30,6 +30,8 @@ jobs:
           dotnet-version: '3.0.100'
       - run: |
           cd .nunitreporter
-          dotnet run ../path/to/artifact/results.xml --json > ../a.json
-      - run: cat a.json
+          dotnet run ../path/to/artifact/results.xml --json ../a.json
+      - run: echo $HOOK
+        env:
+          HOOK: ${{ secrets.slackhook }}
       - run: curl -X POST -H 'Content-type:application/json' -d @"a.json" https://hooks.slack.com/services/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
