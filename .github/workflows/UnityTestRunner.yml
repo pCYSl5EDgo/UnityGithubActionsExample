@@ -14,4 +14,4 @@ jobs:
         unity-tag: [2018.4.9f1]
 
     steps:
-      - run: curl -X POST -H 'Content-type:application/json' --data '{"text":"This is a line of text.\nAnd this is another one."}' https://hooks.slack.com/services/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
+      - run: curl -X POST -H 'Content-type:application/json' --data '{"text":"&quot;This&quot; is a line of text.\nAnd this is another one."}' https://hooks.slack.com/services/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
