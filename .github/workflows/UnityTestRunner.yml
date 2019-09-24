@@ -29,4 +29,4 @@ jobs:
           dotnet-version: '3.0.100'
       - run: |
           cd .nunitreporter
-          dotnet run ../path/to/artifact
+          dotnet run ../path/to/artifact/results.xml
