@@ -31,6 +31,4 @@ jobs:
       - run: |
           cd .nunitreporter
           dotnet run ../path/to/artifact/results.xml --json > ../a.json
-      - run: curl -X POST -H 'Content-type:application/json' -d @"a.json" $SLACK_HOOK
-        env:
-          SLACK_HOOK: ${{ secrets.slackhook }}
+      - run: curl -X POST -H 'Content-type:application/json' -d @"a.json" https://hooks.slack.com/services/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
