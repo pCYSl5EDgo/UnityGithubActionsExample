@@ -1,4 +1,4 @@
-name: Unity Test Runner Example
+name: UnityTestRunnerExampleSlack
 
 on:
   push:
