@@ -9,21 +9,30 @@ namespace NUnitReporter
 {
     class BlockEncoder
     {
+        private string repository;
+        public BlockEncoder(string repository)
+        {
+            this.repository = repository;
+        }
         public string Encode(XmlDocument document, out bool success)
         {
             var root = document.SelectSingleNode("test-run") as XmlElement ?? throw new NullReferenceException();
             var result = root.GetAttribute("result");
             var builder = new StringBuilder();
+            success = !result.StartsWith("Failed");
             var tmpBuilder = new StringBuilder();
             {
                 tmpBuilder.Clear()
+                    .Append("*<https://github.com/")
+                    .Append(repository)
+                    .Append(success ? "/actions|ACTION SUCCESS>*" : "/actions|ACTION FAIL>*\n\n")
                     .Append("test case count : ")
                     .Append(root.GetAttribute("testcasecount"))
                     .Append("\ntotal : ")
                     .Append(root.GetAttribute("total"))
-                    .Append("\nresult : ")
+                    .Append("\nresult : *")
                     .Append(result)
-                    .Append("\npassed : ")
+                    .Append("*\npassed : ")
                     .Append(root.GetAttribute("passed"))
                     .Append("\nfailed : ")
                     .Append(root.GetAttribute("failed"))

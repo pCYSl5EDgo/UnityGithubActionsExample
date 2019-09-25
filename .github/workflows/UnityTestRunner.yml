@@ -40,6 +40,6 @@ jobs:
       - run: mkdir -p path
       - run: |
           cd .nunitreporter
-          dotnet run ../path/to/artifact/results.xml --block ../slackJson  || INPUT_RESULT=$?; echo $INPUT_RESULT > ../path/result
+          dotnet run ../path/to/artifact/results.xml --block ../slackJson $GITHUB_REPOSITORY || INPUT_RESULT=$?; echo $INPUT_RESULT > ../path/result
       - run: curl -X POST -H 'ContentX-type:application/json' --data "$(cat slackJson)" https://hooks.slack.com/services/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
       - run: exit $(cat path/result)
