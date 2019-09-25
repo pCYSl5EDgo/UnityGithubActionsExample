@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Utf8Json;
 
 namespace NUnitReporter
 {
     [Serializable]
-    public struct BlockSection
+    public struct MarkDownText
     {
         [DataMember(Name = "type")]
         public string Type;
 
         [DataMember(Name = "text")]
-        public MarkDownText Text;
+        public string Text;
 
-        public BlockSection(string text)
+        public MarkDownText(string text)
         {
-            Type = "section";
-            Text = new MarkDownText(text);
+            Type = "mrkdwn";
+            Text = text;
         }
     }
 }
