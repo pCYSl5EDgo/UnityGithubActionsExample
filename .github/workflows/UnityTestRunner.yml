@@ -33,6 +33,7 @@ jobs:
         with:
           name: test_results
           path: artifact
+      - run: ls artifact
       - uses: actions/setup-dotnet@v1.0.2
         with:
           dotnet-version: '3.0.100'
