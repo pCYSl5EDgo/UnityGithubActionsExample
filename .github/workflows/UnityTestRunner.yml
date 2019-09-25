@@ -14,33 +14,33 @@ jobs:
         unity-tag: [2018.4.9f1]
 
     steps:
-      - uses: actions/checkout@master
-      - run: mkdir -p path/to/artifact
-      - run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
-        env:
-          CYPHER_KEY: ${{ secrets.cypherkey }}
-      - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
-      - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || exit 0
-      - uses: actions/upload-artifact@master
-        with:
-          name: test_results
-          path: path/to/artifact
+    - uses: actions/checkout@master
+    - run: mkdir -p path/to/artifact
+    - run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
+      env:
+        CYPHER_KEY: ${{ secrets.cypherkey }}
+    - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
+    - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || exit 0
+    - uses: actions/upload-artifact@master
+      with:
+        name: test_results
+        path: path/to/artifact
   reportResultJob:
     runs-on: ubuntu-latest
     needs: editorTestJob
     steps:
-      - uses: actions/download-artifact@master
-        with:
-          name: test_results
-          path: artifact
-      - run: git clone https://github.com/pCYSl5EDgo/NUnitXmlReporter.git
-      - uses: actions/setup-dotnet@v1.0.2
-        with:
-          dotnet-version: '3.0.100'
-      - name: report result to slack
-        run: |
-          cd NUnitXmlReporter
-          dotnet run ../artifact/results.xml ../slackJson --slack-block  $GITHUB_REPOSITORY $GITHUB_SHA || INPUT_RESULT=$?
-          cd ..
-          curl -X POST -H 'ContentX-type:application/json' --data "$(cat slackJson)" https://hooks.slack.com/services/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
-          exit INPUT_RESULT
+    - uses: actions/download-artifact@master
+      with:
+        name: test_results
+        path: artifact
+    - run: git clone https://github.com/pCYSl5EDgo/NUnitXmlReporter.git
+    - uses: actions/setup-dotnet@v1.0.2
+      with:
+        dotnet-version: '3.0.100'
+    - name: report result to slack
+      run: |
+        cd NUnitXmlReporter
+        dotnet run ../artifact/results.xml ../slackJson --slack-block  $GITHUB_REPOSITORY $GITHUB_SHA || INPUT_RESULT=$?
+        cd ..
+        curl -X POST -H 'ContentX-type:application/json' --data "$(cat slackJson)" https://hooks.slack.com/services/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
+        exit INPUT_RESULT
