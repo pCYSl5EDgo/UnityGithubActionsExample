@@ -56,15 +56,28 @@ namespace NUnitReporter
                     var messages = failure.GetElementsByTagName("message");
                     if (messages.Count != 0)
                     {
-                        tmpBuilder.Append("\n\tmessage : ");
-                        tmpBuilder.Append(messages[0].FirstChild.Value);
+                        tmpBuilder.Append("\n  message :");
+                        var firstChildValue = messages[0].FirstChild.Value;
+
+                        var line = firstChildValue.Split('\n');
+                        for (int i = 0; i < line.Length; i++)
+                        {
+                            tmpBuilder.Append("\n    ").Append(line);
+                        }
+                        tmpBuilder.Append(firstChildValue);
                     }
 
                     var stackTraces = failure.GetElementsByTagName("stack-trace");
                     if (stackTraces.Count != 0)
                     {
-                        tmpBuilder.Append("\n\tstack-trace : ");
-                        tmpBuilder.Append(stackTraces[0].FirstChild.Value);
+                        tmpBuilder.Append("\n  stack-trace :");
+                        var firstChildValue = stackTraces[0].FirstChild.Value;
+                        var line = firstChildValue.Split('\n');
+                        for (int i = 0; i < line.Length; i++)
+                        {
+                            tmpBuilder.Append("\n    ").Append(line);
+                        }
+                        tmpBuilder.Append(firstChildValue);
                     }
                 }
                 builder.Append(Encoding.UTF8.GetString(JsonSerializer.Serialize(new BlockSection(tmpBuilder.ToString()))));
