@@ -59,10 +59,10 @@ namespace NUnitReporter
                         tmpBuilder.Append("\n  message :");
                         var firstChildValue = messages[0].FirstChild.Value;
 
-                        var line = firstChildValue.Split('\n');
-                        for (int i = 0; i < line.Length; i++)
+                        var lines = firstChildValue.Split('\n');
+                        foreach (var line in lines)
                         {
-                            tmpBuilder.Append("\n    ").Append(line);
+                            tmpBuilder.Append("\n    ").Append(line.TrimEnd());
                         }
                         tmpBuilder.Append(firstChildValue);
                     }
@@ -72,10 +72,10 @@ namespace NUnitReporter
                     {
                         tmpBuilder.Append("\n  stack-trace :");
                         var firstChildValue = stackTraces[0].FirstChild.Value;
-                        var line = firstChildValue.Split('\n');
-                        for (int i = 0; i < line.Length; i++)
+                        var lines = firstChildValue.Split('\n');
+                        foreach (var line in lines)
                         {
-                            tmpBuilder.Append("\n    ").Append(line);
+                            tmpBuilder.Append("\n    ").Append(line.TrimEnd());
                         }
                         tmpBuilder.Append(firstChildValue);
                     }
