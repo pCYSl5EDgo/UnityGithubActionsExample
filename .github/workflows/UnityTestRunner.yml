@@ -36,6 +36,7 @@ jobs:
         with:
           dotnet-version: '3.0.100'
       - run: dotnet tool install -g NUnitReporter
-      - run: nunit-xml-reporter results.xml slackJson --slack-block  $GITHUB_REPOSITORY $GITHUB_SHA || INPUT_RESULT=$?; echo $INPUT_RESULT > ../result
+      - run: nunit-xml-reporter results.xml slackJson --slack-block  "$GITHUB_REPOSITORY" "$GITHUB_SHA" || INPUT_RESULT=$?; echo $INPUT_RESULT > ../result
+      - run: cat slackJson
       - run: curl -X POST -H 'ContentX-type:application/json' --data "$(cat slackJson)" https://hooks.slack.com/services/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
       - run: exit $(cat result)
