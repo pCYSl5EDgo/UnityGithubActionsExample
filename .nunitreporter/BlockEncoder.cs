@@ -64,7 +64,6 @@ namespace NUnitReporter
                         {
                             tmpBuilder.Append("\n    ").Append(line.TrimEnd());
                         }
-                        tmpBuilder.Append(firstChildValue);
                     }
 
                     var stackTraces = failure.GetElementsByTagName("stack-trace");
@@ -77,7 +76,6 @@ namespace NUnitReporter
                         {
                             tmpBuilder.Append("\n    ").Append(line.TrimEnd());
                         }
-                        tmpBuilder.Append(firstChildValue);
                     }
                 }
                 builder.Append(Encoding.UTF8.GetString(JsonSerializer.Serialize(new BlockSection(tmpBuilder.ToString()))));
