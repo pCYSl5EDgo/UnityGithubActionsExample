@@ -23,10 +23,10 @@ namespace NUnitReporter
             var tmpBuilder = new StringBuilder();
             {
                 tmpBuilder.Clear()
-                    .Append("*<https://github.com/")
+                    .Append("<https://github.com/")
                     .Append(repository)
-                    .Append(success ? "/actions|ACTION SUCCESS>*" : "/actions|ACTION FAIL>*\n\n")
-                    .Append("test case count : ")
+                    .Append(success ? "/actions|*ACTION SUCCESS*>" : "/actions|*ACTION FAIL*>")
+                    .Append("\n\ntest case count : ")
                     .Append(root.GetAttribute("testcasecount"))
                     .Append("\ntotal : ")
                     .Append(root.GetAttribute("total"))
