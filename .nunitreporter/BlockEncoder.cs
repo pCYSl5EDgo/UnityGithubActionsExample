@@ -9,10 +9,13 @@ namespace NUnitReporter
 {
     class BlockEncoder
     {
-        private string repository;
-        public BlockEncoder(string repository)
+        private readonly string repository;
+        private readonly string commitSha;
+
+        public BlockEncoder(string repository, string commitSha)
         {
             this.repository = repository;
+            this.commitSha = commitSha;
         }
         public string Encode(XmlDocument document, out bool success)
         {
@@ -25,7 +28,9 @@ namespace NUnitReporter
                 tmpBuilder.Clear()
                     .Append("<https://github.com/")
                     .Append(repository)
-                    .Append(success ? "/actions|*ACTION SUCCESS*>" : "/actions|*ACTION FAIL*>")
+                    .Append("/commit/")
+                    .Append(commitSha)
+                    .Append(success ? "/checks|*ACTION SUCCESS*>" : "/checks|*ACTION FAIL*>")
                     .Append("\n\ntest case count : ")
                     .Append(root.GetAttribute("testcasecount"))
                     .Append("\ntotal : ")
