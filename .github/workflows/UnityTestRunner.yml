@@ -37,6 +37,7 @@ jobs:
       - uses: actions/setup-dotnet@v1.0.2
         with:
           dotnet-version: '3.0.100'
+      - run: mkdir -p path
       - run: |
           cd .nunitreporter
           dotnet run ../path/to/artifact/results.xml --block ../slackJson  || INPUT_RESULT=$?; echo $INPUT_RESULT > path/result
