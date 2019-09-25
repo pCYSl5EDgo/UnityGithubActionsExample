@@ -20,7 +20,7 @@ jobs:
         env:
           CYPHER_KEY: ${{ secrets.cypherkey }}
       - run: /opt/Unity/Editor/Unity -manualLicenseFile /Unity_v2018.x.ulf -batchmode -nographics -quit || exit 0
-      - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || INPUT_RESULT=$?; echo $INPUT_RESULT > path/result
+      - run: /opt/Unity/Editor/Unity -batchmode -nographics -silent-crashes -logFile -projectPath . -runEditorTests -editorTestsResultFile path/to/artifact/results.xml || 0
       - uses: actions/upload-artifact@master
         with:
           name: test_results
@@ -39,5 +39,6 @@ jobs:
           dotnet-version: '3.0.100'
       - run: |
           cd .nunitreporter
-          dotnet run ../path/to/artifact/results.xml --console ../a.txt
-      - run: curl -X POST -H 'ContentX-type:application/json' --data "$(cat a.txt)" https://hooks.slack.com/services/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
+          dotnet run ../path/to/artifact/results.xml --console ../slackJson  || INPUT_RESULT=$?; echo $INPUT_RESULT > path/result
+      - run: curl -X POST -H 'ContentX-type:application/json' --data "$(cat slackJson)" https://hooks.slack.com/services/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
+      - run: exit $(cat path/result)
