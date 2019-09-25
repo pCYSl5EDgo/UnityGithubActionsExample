@@ -14,6 +14,7 @@ jobs:
         unity-tag: [2018.4.9f1]
 
     steps:
+      - run: curl --help
       - uses: actions/checkout@master
       - run: mkdir -p path/to/artifact
       - run: openssl aes-256-cbc -d -in Unity_v2018.x.ulf-cipher -k ${CYPHER_KEY} >> /Unity_v2018.x.ulf
@@ -31,5 +32,6 @@ jobs:
       - run: |
           cd .nunitreporter
           dotnet run ../path/to/artifact/results.xml --console ../a.txt
+      - run: curl --help
       - run: curl -X POST -H 'ContentX-type:application/json' --data "$(cat a.txt)" https://hooks.slack.com/services/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
       - run: exit $(cat path/result)
