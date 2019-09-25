@@ -33,16 +33,14 @@ jobs:
         with:
           name: test_results
           path: artifact
-      - run: ls artifact
+      - run: git clone https://github.com/pCYSl5EDgo/NUnitXmlReporter.git
       - uses: actions/setup-dotnet@v1.0.2
         with:
           dotnet-version: '3.0.100'
       - name: report result to slack
         run: |
-          dotnet tool install -g NUnitReporter
-          touch slackJson
-          ls 
-          nunit-xml-reporter artifact/results.xml slackJson --slack-block  $GITHUB_REPOSITORY $GITHUB_SHA || INPUT_RESULT=$?
-          cat slackJson
+          cd NUnitXmlReporter
+          dotnet run ../artifact/results.xml ../slackJson --slack-block  $GITHUB_REPOSITORY $GITHUB_SHA || INPUT_RESULT=$?
+          cd ..
           curl -X POST -H 'ContentX-type:application/json' --data "$(cat slackJson)" https://hooks.slack.com/services/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
           exit INPUT_RESULT
