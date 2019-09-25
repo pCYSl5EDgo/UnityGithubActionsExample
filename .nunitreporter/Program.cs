@@ -30,6 +30,16 @@ namespace NUnitReporter
                         writer.Write('}');
                         return success ? 0 : 2;
                     }
+                case "--block":
+                    {
+                        using var writer = new StreamWriter(args[2]);
+                        writer.Write(@"{""text"":");
+                        writer.Write(Encoding.UTF8.GetString(JsonSerializer.Serialize(new ConsoleEncoder().Encode(doc, out var success))));
+                        writer.Write(@",""blocks"":[");
+                        writer.Write(new BlockEncoder().Encode(doc, out _));
+                        writer.Write("]}");
+                        return success ? 0 : 2;
+                    }
                 default:
                     return 1;
             }
